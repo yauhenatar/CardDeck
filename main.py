@@ -108,18 +108,12 @@ def create_deck() -> list:
         return create_big_deck(cards, deck)
 
 
-def get_value(deck: list):
+def get_value(card: str):
     cards = check_cards(operation)
-    card_index = int(input('Enter card number in deck:\n')) - 1
-    val = deck[card_index].split()[0]
+    num_card = card.split()[0]
     for key in cards:
-        if val == key:
+        if num_card == key:
             return cards[key]
-
-
-deck = create_deck()
-shuffle(deck)
-print(deck)
 
 
 def get_num_cards_to_play():
@@ -136,14 +130,28 @@ def took_random_cards(deck: list):
     return cards_list
 
 
-randomed_cards = took_random_cards(deck)
-print(randomed_cards)
-# if deck_values[f_index] > deck_values[s_index]:
-#     print(f'{choice_1} vs {choice_2}\n'
-#           f'Победил {choice_1}')
-# elif deck_values[f_index] < deck_values[s_index]:
-#     print(f'{choice_1} vs {choice_2}\n'
-#           f'Победил {choice_2}')
-# else:
-#     print(f'{choice_1} vs {choice_2}\n'
-#           'Ничья')
+def get_values_of_random_cards(random_cards: list):
+    values_list = list()
+    for card in random_cards:
+        values_list.append(get_value(card))
+    return values_list
+
+
+def get_winners(random_cards: list):
+    values_cards = get_values_of_random_cards(random_cards)
+    max_value = max(values_cards)
+    print('WINNER(S):')
+    max_index = values_cards.index(max_value)
+    for i in range(len(random_cards)):
+        if max_value not in values_cards:
+            break
+        else:
+            print(random_cards[max_index])
+            del values_cards[max_index]
+            del random_cards[max_index]
+
+
+deck = create_deck()
+random_cards = took_random_cards(deck)
+print(random_cards)
+get_winners(random_cards)
