@@ -1,40 +1,41 @@
 from random import shuffle, choice
 
-OPERATIONS = ['big_deck', 'standart_deck']
+OPERATIONS = ['big', 'small']
 
 STANDART_CARDS = {
-    6: '6',
-    7: '7',
-    8: '8',
-    9: '9',
-    10: '10',
-    11: 'jack',
-    12: 'queen',
-    13: 'king',
-    14: 'ace'
+    '6': 6,
+    '7': 7,
+    '8': 8,
+    '9': 9,
+    '10': 10,
+    'jack': 11,
+    'queen': 12,
+    'king': 13,
+    'ace': 14
 }
 
 BIG_CARDS = {
-    2: '2',
-    3: '3',
-    4: '4',
-    5: '5',
-    6: '6',
-    7: '7',
-    8: '8',
-    9: '9',
-    10: '10',
-    11: 'jack',
-    12: 'queen',
-    13: 'king',
-    14: 'ace',
-    15: 'joker'
+    '2': 2,
+    '3': 3,
+    '4': 4,
+    '5': 5,
+    '6': 6,
+    '7': 7,
+    '8': 8,
+    '9': 9,
+    '10': 10,
+    'jack': 11,
+    'queen': 12,
+    'king': 13,
+    'ace': 14,
+    'joker': 15
 }
 
 SUITS_LIST = ['hearts', 'clubs', 'spades', 'diamonds']
 JOKER_COLORS = ['black', 'red']
 
 deck_values = list()
+operation = ''
 
 def check_operations(operations=None):
     if operations is None:
@@ -52,8 +53,9 @@ def check_suits(suits=None):
 
 
 def check_operation():
+    global operation
     operations = check_operations()
-    operation = input('Enter needed deck:\n')
+    operation = input('Enter needed deck (small/big):\n').lower()
     if operation not in operations:
         return check_operation()
     else:
@@ -61,9 +63,9 @@ def check_operation():
 
 
 def check_cards(operation, cards=None):
-    if operation == 'standart_deck':
+    if operation == 'small':
         return STANDART_CARDS
-    elif operation == 'big_deck':
+    elif operation == 'big':
         return BIG_CARDS
 
 
@@ -72,9 +74,10 @@ def create_standart_deck(cards, deck: list):
 
     for suit in suits:
         for c in cards:
-            deck.append(f'{cards[c]} {suit}')
+            deck.append(f'{c} {suit}')
 
     return deck
+
 
 def create_big_deck(cards, deck: list):
     suits = check_suits()
@@ -82,15 +85,15 @@ def create_big_deck(cards, deck: list):
 
     for color in joker_colors:
         for jc in cards:
-            if cards[jc] == 'joker':
-                deck.append(f'{cards[jc]} {color}')
+            if jc == 'joker':
+                deck.append(f'{jc} {color}')
 
     for suit in suits:
         for c in cards:
-            if cards[c] == 'joker':
+            if c == 'joker':
                 pass
             else:
-                deck.append(f'{cards[c]} {suit}')
+                deck.append(f'{c} {suit}')
 
     return deck
 
@@ -99,14 +102,29 @@ def create_deck() -> list:
     deck = list()
     operation = check_operation()
     cards = check_cards(operation)
-    if operation == 'standart_deck':
+    if operation == 'small':
         return create_standart_deck(cards, deck)
-    elif operation == 'big_deck':
+    elif operation == 'big':
         return create_big_deck(cards, deck)
 
 
 deck = create_deck()
 print(deck)
+
+
+# def check_deck_len(deck: list):
+#     if len(deck)
+
+def get_value(deck: list):
+    cards = check_cards(operation)
+    card_index = int(input('Enter card number in deck:\n')) - 1
+    val = deck[card_index].split()[0]
+    for key in cards:
+        if val == key:
+            return cards[key]
+
+
+print(get_value(deck))
 
 # shuffle(deck)
 #
