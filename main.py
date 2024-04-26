@@ -2,50 +2,42 @@ from random import choice
 
 DECK_LENGTH = ['big', 'small']
 
-STANDART_CARDS = {
-    '6': 6,
-    '7': 7,
-    '8': 8,
-    '9': 9,
-    '10': 10,
-    'jack': 11,
-    'queen': 12,
-    'king': 13,
-    'ace': 14
+SMALL_DECK = {
+    6: '6',
+    7: '7',
+    8: '8',
+    9: '9',
+    10: '10',
+    11: 'jack',
+    12: 'queen',
+    13: 'king',
+    14: 'ace'
 }
 
-BIG_CARDS = {
-    '2': 2,
-    '3': 3,
-    '4': 4,
-    '5': 5,
-    '6': 6,
-    '7': 7,
-    '8': 8,
-    '9': 9,
-    '10': 10,
-    'jack': 11,
-    'queen': 12,
-    'king': 13,
-    'ace': 14,
-    'joker': 15
+BIG_DECK = {
+    2: '2',
+    3: '3',
+    4: '4',
+    5: '5',
+    6: '6',
+    7: '7',
+    8: '8',
+    9: '9',
+    10: '10',
+    11: 'jack',
+    12: 'queen',
+    13: 'king',
+    14: 'ace',
+    15: 'joker'
 }
 
 SUITS_LIST = ['hearts', 'clubs', 'spades', 'diamonds']
 JOKER_COLORS = ['black', 'red']
 
-deck_values = list()
-deck_length = ''
-
 
 def set_deck_length(deck_length=None):
     if deck_length is None or deck_length == '':
         return DECK_LENGTH
-
-
-def set_colors(colors=None):
-    if colors is None:
-        return JOKER_COLORS
 
 
 def set_suits(suits=None):
@@ -54,7 +46,6 @@ def set_suits(suits=None):
 
 
 def set_deck_lenght():
-    global deck_length
     operations = set_deck_length()
     operation = input('Enter needed deck (small/big):\n').lower()
     if operation not in operations:
@@ -64,10 +55,7 @@ def set_deck_lenght():
 
 
 def set_cards(deck_length):
-    if deck_length == 'small':
-        return STANDART_CARDS
-    elif deck_length == 'big':
-        return BIG_CARDS
+    return SMALL_DECK if deck_length == 'small' else BIG_DECK
 
 
 def create_standart_deck(cards, deck: list):
@@ -75,26 +63,25 @@ def create_standart_deck(cards, deck: list):
 
     for suit in suits:
         for c in cards:
-            deck.append(f'{c} {suit}')
+            deck.append(f'{cards[c]} {suit}')
 
     return deck
 
 
-def create_big_deck(cards, deck: list):
+def create_big_deck(cards, deck: list, colors=None):
     suits = set_suits()
-    joker_colors = set_colors()
+    if colors is None:
+        colors = JOKER_COLORS
 
-    for color in joker_colors:
+    for color in colors:
         for jc in cards:
-            if jc == 'joker':
-                deck.append(f'{jc} {color}')
+            if cards[jc] == 'joker':
+                deck.append(f'{cards[jc]} {color}')
 
     for suit in suits:
         for c in cards:
-            if c == 'joker':
-                pass
-            else:
-                deck.append(f'{c} {suit}')
+            if cards[c] != 'joker':
+                deck.append(f'{cards[c]} {suit}')
 
     return deck
 
@@ -113,8 +100,8 @@ def get_value(card: str):
     cards = set_cards(deck_length)
     num_card = card.split()[0]
     for key in cards:
-        if num_card == key:
-            return cards[key]
+        if num_card == cards[key]:
+            return key
 
 
 def set_num_cards_to_play():
@@ -140,14 +127,21 @@ def get_values_of_random_cards(random_cards: list):
 
 def get_winners(random_cards: list):
     values_cards = get_values_of_random_cards(random_cards)
+    print(values_cards)
     max_value = max(values_cards)
     print('WINNER(S):')
-    max_index = values_cards.index(max_value)
     for i in range(len(random_cards)):
-        if max_value not in values_cards:
-            break
-        else:
+        if max_value in values_cards:
+            max_index = values_cards.index(max_value)
             print(random_cards[max_index])
             del values_cards[max_index]
             del random_cards[max_index]
+        else:
+            break
 
+
+if __name__ == '__main__':
+    deck_length = ''
+    deck = create_deck()
+    random_cards = took_random_cards(deck)
+    get_winners(random_cards)
