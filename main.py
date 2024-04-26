@@ -108,13 +108,6 @@ def create_deck() -> list:
         return create_big_deck(cards, deck)
 
 
-deck = create_deck()
-print(deck)
-
-
-# def check_deck_len(deck: list):
-#     if len(deck)
-
 def get_value(deck: list):
     cards = check_cards(operation)
     card_index = int(input('Enter card number in deck:\n')) - 1
@@ -124,24 +117,27 @@ def get_value(deck: list):
             return cards[key]
 
 
-print(get_value(deck))
+deck = create_deck()
+shuffle(deck)
+print(deck)
 
-# shuffle(deck)
-#
-# for el in deck:
-#     for key in BIG_CARDS:
-#         if BIG_CARDS[key] == el.split()[0]:
-#             deck_values.append(key)
-#
-# print(deck)
-#
-# choice_1 = choice(deck)
-# choice_2 = choice(deck)
-# f_index = deck.index(choice_1)
-# s_index = deck.index(choice_2)
-#
-#
-#
+
+def get_num_cards_to_play():
+    return int(input('Enter count of playing cards:\n'))
+
+
+def took_random_cards(deck: list):
+    cards_to_play = get_num_cards_to_play()
+    cards_list = list()
+    for i in range(cards_to_play):
+        choosed = choice(deck)
+        cards_list.append(choosed)
+        deck.remove(choosed)
+    return cards_list
+
+
+randomed_cards = took_random_cards(deck)
+print(randomed_cards)
 # if deck_values[f_index] > deck_values[s_index]:
 #     print(f'{choice_1} vs {choice_2}\n'
 #           f'Победил {choice_1}')
