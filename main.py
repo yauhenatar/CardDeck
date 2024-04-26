@@ -36,7 +36,6 @@ JOKER_COLORS = ['black', 'red']
 
 deck_values = list()
 
-
 def check_operations(operations=None):
     if operations is None:
         return OPERATIONS
@@ -68,7 +67,7 @@ def check_cards(operation, cards=None):
         return BIG_CARDS
 
 
-def create_standart_deck(cards, deck: list=[]):
+def create_standart_deck(cards, deck: list):
     suits = check_suits()
 
     for suit in suits:
@@ -77,7 +76,7 @@ def create_standart_deck(cards, deck: list=[]):
 
     return deck
 
-def create_big_deck(cards, deck: list=[]):
+def create_big_deck(cards, deck: list):
     suits = check_suits()
     joker_colors = check_colors()
 
@@ -97,12 +96,13 @@ def create_big_deck(cards, deck: list=[]):
 
 
 def create_deck() -> list:
+    deck = list()
     operation = check_operation()
     cards = check_cards(operation)
     if operation == 'standart_deck':
-        return create_standart_deck(cards)
+        return create_standart_deck(cards, deck)
     elif operation == 'big_deck':
-        return create_big_deck(cards)
+        return create_big_deck(cards, deck)
 
 
 deck = create_deck()
