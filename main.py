@@ -127,7 +127,6 @@ def get_values_of_random_cards(random_cards: list):
 
 def get_winners(random_cards: list):
     values_cards = get_values_of_random_cards(random_cards)
-    print(values_cards)
     max_value = max(values_cards)
     print('WINNER(S):')
     for i in range(len(random_cards)):
