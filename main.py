@@ -39,7 +39,7 @@ deck_length = ''
 
 
 def set_deck_length(deck_length=None):
-    if deck_length is None:
+    if deck_length is None or deck_length == '':
         return DECK_LENGTH
 
 
