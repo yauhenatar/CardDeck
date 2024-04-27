@@ -12,11 +12,11 @@ def set_suits(suits=None):
         return SUITS_LIST
 
 
-def get_length():
+def get_deck_type() -> str:
     operations = set_deck_length()
     operation = input('Enter needed deck (small/big):\n').lower()
     if operation not in operations:
-        return get_length()
+        return get_deck_type()
     else:
         return operation
 
@@ -25,7 +25,8 @@ def set_cards(deck_length):
     return SMALL_DECK if deck_length == 'small' else BIG_DECK
 
 
-def create_small_deck(cards, deck: list):
+def create_small_deck(cards):
+    deck = list()
     suits = set_suits()
 
     for suit in suits:
@@ -35,7 +36,8 @@ def create_small_deck(cards, deck: list):
     return deck
 
 
-def create_big_deck(cards, deck: list, colors=None):
+def create_big_deck(cards, colors=None):
+    deck = list()
     suits = set_suits()
     if colors is None:
         colors = JOKER_COLORS
@@ -54,13 +56,9 @@ def create_big_deck(cards, deck: list, colors=None):
 
 
 def create_deck():
-    deck = list()
-    operation = get_length()
+    operation = get_deck_type()
     cards = set_cards(operation)
-    if operation == 'small':
-        return create_small_deck(cards, deck)
-    elif operation == 'big':
-        return create_big_deck(cards, deck)
+    return create_small_deck(cards) if operation == 'small' else create_big_deck(cards)
 
 
 def get_value(card: str):
