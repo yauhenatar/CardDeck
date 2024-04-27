@@ -45,11 +45,11 @@ def set_suits(suits=None):
         return SUITS_LIST
 
 
-def set_length():
+def get_length():
     operations = set_deck_length()
     operation = input('Enter needed deck (small/big):\n').lower()
     if operation not in operations:
-        return set_length()
+        return get_length()
     else:
         return operation
 
@@ -58,7 +58,7 @@ def set_cards(deck_length):
     return SMALL_DECK if deck_length == 'small' else BIG_DECK
 
 
-def create_standart_deck(cards, deck: list):
+def create_small_deck(cards, deck: list):
     suits = set_suits()
 
     for suit in suits:
@@ -88,10 +88,10 @@ def create_big_deck(cards, deck: list, colors=None):
 
 def create_deck():
     deck = list()
-    operation = set_length()
+    operation = get_length()
     cards = set_cards(operation)
     if operation == 'small':
-        return create_standart_deck(cards, deck)
+        return create_small_deck(cards, deck)
     elif operation == 'big':
         return create_big_deck(cards, deck)
 
@@ -104,12 +104,12 @@ def get_value(card: str):
             return key
 
 
-def set_num_cards_to_play():
+def get_num_cards_to_play():
     return int(input('Enter count of playing cards:\n'))
 
 
 def took_random_cards(deck: list):
-    cards_to_play = set_num_cards_to_play()
+    cards_to_play = get_num_cards_to_play()
     cards_list = list()
     for i in range(cards_to_play):
         choosed = choice(deck)
@@ -130,14 +130,9 @@ def get_winners(random_cards: list):
     print(values_cards)
     max_value = max(values_cards)
     print('WINNER(S):')
-    for i in range(len(random_cards)):
-        if max_value in values_cards:
-            max_index = values_cards.index(max_value)
-            print(random_cards[max_index])
-            del values_cards[max_index]
-            del random_cards[max_index]
-        else:
-            break
+    for el_rand, el_val in zip(random_cards, values_cards):
+        if max_value == el_val:
+            print(el_rand)
 
 
 if __name__ == '__main__':
