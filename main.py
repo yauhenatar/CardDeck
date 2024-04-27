@@ -45,11 +45,11 @@ def set_suits(suits=None):
         return SUITS_LIST
 
 
-def set_deck_lenght():
+def set_length():
     operations = set_deck_length()
     operation = input('Enter needed deck (small/big):\n').lower()
     if operation not in operations:
-        return set_deck_lenght()
+        return set_length()
     else:
         return operation
 
@@ -88,7 +88,7 @@ def create_big_deck(cards, deck: list, colors=None):
 
 def create_deck():
     deck = list()
-    operation = set_deck_lenght()
+    operation = set_length()
     cards = set_cards(operation)
     if operation == 'small':
         return create_standart_deck(cards, deck)
@@ -127,6 +127,7 @@ def get_values_of_random_cards(random_cards: list):
 
 def get_winners(random_cards: list):
     values_cards = get_values_of_random_cards(random_cards)
+    print(values_cards)
     max_value = max(values_cards)
     print('WINNER(S):')
     for i in range(len(random_cards)):
